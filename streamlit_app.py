@@ -57,7 +57,7 @@ def modal_confirmar_reset():
     
     col_si, col_no = st.columns(2)
     
-    if col_si.button("Sí, borrar todo", type="primary",width="stretch"):
+    if col_si.button("Sí, borrar", type="primary",width="stretch"):
         reset_todo()
         st.rerun() # Recargamos la app para aplicar el borrado
         
@@ -68,18 +68,16 @@ def modal_confirmar_reset():
 @st.dialog("📊 Resumen del Cierre")
 def modal_resumen():
     total = 0.0
+    st.subheader(f"💰 Total Caja: {total:.2f} €")
+    st.subheader(f"📦 A Declarar: {total - 100:.2f} €")
+    st.divider()
     for nombre, multiplicador, id_moneda in PASOS:
         cant = st.session_state.cantidades[id_moneda]
         if cant > 0:
             subtotal = cant * multiplicador
             total += subtotal
             st.write(f"- {nombre}: {cant} unds. (**{subtotal:.2f} €**)")
-    
-    st.divider()
-    st.subheader(f"💰 Total Caja: {total:.2f} €")
-    st.subheader(f"📦 A Declarar: {total - 100:.2f} €")
-
-
+  
 # --- CSS DEFINITIVO ---
 st.markdown("""
 <style>
@@ -256,7 +254,7 @@ texto_pantalla = st.session_state.teclado if st.session_state.teclado else "0"
 col_volver, col_progreso = st.columns([1, 1])
 with col_volver:
     # Se desactiva solo si estamos en el paso 0
-    st.button("⬅️ Volver", disabled=(st.session_state.paso == 0), on_click=retroceder, width="stretch", key="volver")
+    st.button("⬅ Volver", disabled=(st.session_state.paso == 0), on_click=retroceder, width="stretch", key="volver")
 with col_progreso:
     st.markdown(f"<p style='text-align: right; color: gray; margin-top: 5px; font-weight: bold;'>Paso {st.session_state.paso + 1}/12</p>", unsafe_allow_html=True)
 
