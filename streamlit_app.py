@@ -65,19 +65,26 @@ def modal_confirmar_reset():
         st.rerun() # Solo cerramos el pop-up sin hacer nada
 
 # Pop-up final con las cuentas
+# Pop-up final con las cuentas ordenadas
 @st.dialog("📊 Resumen del Cierre")
 def modal_resumen():
+    # 1. PASO INVISIBLE: Calcular el total primero de fondo
     total = 0.0
+    for _, multiplicador, id_moneda in PASOS:
+        cant = st.session_state.cantidades[id_moneda]
+        total += cant * multiplicador
+
+    # 2. PASO VISUAL SUPERIOR: Mostrar los totales ya calculados arriba
     st.subheader(f"💰 Total Caja: {total:.2f} €")
     st.subheader(f"📦 A Declarar: {total - 100:.2f} €")
     st.divider()
+    
+    # 3. PASO VISUAL INFERIOR: Mostrar el desglose de lo que hay
     for nombre, multiplicador, id_moneda in PASOS:
         cant = st.session_state.cantidades[id_moneda]
         if cant > 0:
             subtotal = cant * multiplicador
-            total += subtotal
             st.write(f"- {nombre}: {cant} unds. (**{subtotal:.2f} €**)")
-  
 # --- CSS DEFINITIVO ---
 st.markdown("""
 <style>
