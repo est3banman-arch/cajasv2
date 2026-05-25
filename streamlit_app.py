@@ -90,7 +90,8 @@ st.markdown("""
 <style>
     /*---- HEADER OCULTO ----*/ 
     header[data-testid="stHeader"] {
-        visibility: hidden;
+        /*visibility: hidden;*/
+        opacity: 0; 
         transition: opacity .3s ease;
     }
     header[data-testid="stHeader"]:hover {
@@ -176,9 +177,10 @@ st.markdown("""
 
     /* C. BOTONES DE ABAJO (Usando sus KEYS para no romper nada más) */
     div.st-key-contar button, div.st-key-reset button {
-        height: 8vh !important; 
+        height: 9vh !important; 
         min-height: 50px !important;
         border-radius: 8px !important;
+        max-height: 80px; 
     }
     div.st-key-contar button p, div.st-key-reset button p {
         font-size: 22px !important;
